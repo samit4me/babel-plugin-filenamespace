@@ -89,9 +89,9 @@ const moduleNamespace = __filenamespace;
 const moduleNamespace = 'app/containers/App/data/actions/';
 
 // Which allows you to reduce boilerplate and action conflicts
-export const LOAD_DATA = `${moduleNamespace}LOAD_DATA`;
-export const LOAD_DATA_SUCCESS = `${moduleNamespace}LOAD_DATA_SUCCESS`;
-export const LOAD_DATA_ERROR = `${moduleNamespace}LOAD_DATA_ERROR`;
+export const LOAD_DATA = `${moduleNamespace}/LOAD_DATA`;
+export const LOAD_DATA_SUCCESS = `${moduleNamespace}/LOAD_DATA_SUCCESS`;
+export const LOAD_DATA_ERROR = `${moduleNamespace}/LOAD_DATA_ERROR`;
 ```
 
 ### Options
@@ -119,7 +119,7 @@ In `app/container/App/data/index.js`
 const moduleNamespace = __filenamespace;
 
 // Will be transformed into something like this
-const moduleNamespace = 'containers.App.data.';
+const moduleNamespace = 'containers.App.data';
 ```
 
 ## License
