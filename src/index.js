@@ -1,4 +1,4 @@
-import nodePath from 'path';
+const nodePath = require('path');
 
 export default ({ types: t }) => ({
   visitor: {
@@ -11,16 +11,37 @@ export default ({ types: t }) => ({
         const { filename, basename, sourceRoot } = state.file.opts;
         const dirname = nodePath.dirname(filename);
 
-        // Transform filename
-        let filenamespace = dirname.replace(`${sourceRoot}/`, '');
-        if (root && filenamespace.startsWith(root)) {
-          filenamespace = filenamespace.replace(`${root}/`, '');
+        // Set base directory (project source + root specified)
+        let userSetRoot = root;
+        let projectSrc = sourceRoot;
+        if (root) {
+          const dotSlash = root.match(/^\.\//);
+          const dotDotSlash = root.match(/^\.\.\//);
+          if (dotSlash) {
+            userSetRoot = userSetRoot.replace(/^\.\//, '');
+          }
+          if (dotDotSlash) {
+            const sourcePathSegments = sourceRoot.split('/');
+            const rootPathSegments = userSetRoot.split('/');
+            projectSrc = rootPathSegments
+              .filter(val => val.match(/^\.\.$/))
+              .reduce(acc => acc.slice(0, -1), sourcePathSegments)
+              .join('/');
+          }
+        }
+
+        let filenamespace = dirname.replace(`${projectSrc}`, '');
+        if (userSetRoot && filenamespace.startsWith(`/${userSetRoot}`)) {
+          filenamespace = filenamespace.replace(`${userSetRoot}`, '');
         }
 
         // Remove filename if "index" as it is meaningless
         if (basename !== 'index') {
           filenamespace += `/${basename}`;
         }
+
+        // Strip leading path seperators
+        filenamespace = filenamespace.replace(/^\/+/, '');
 
         // Set custom seperator
         if (seperator) {

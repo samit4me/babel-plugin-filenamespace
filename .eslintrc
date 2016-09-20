@@ -6,6 +6,9 @@
       "es6": true,
       "jest": true
     },
+    "globals": {
+      "__filenamespace": false
+    },
     "plugins": [
         "react",
         "jsx-a11y",

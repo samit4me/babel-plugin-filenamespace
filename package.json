@@ -4,7 +4,7 @@
   "description": "Babel plugin to generate a namespace based on filename",
   "main": "lib/index.js",
   "scripts": {
-    "test": "jest",
+    "test": "npm run compile && jest",
     "compile": "cross-env NODE_ENV=production babel src --out-dir lib --ignore spec.js,test.js",
     "prepublish": "npm run compile"
   },
@@ -19,6 +19,18 @@
   },
   "author": "Samuel Sharpe",
   "license": "MIT",
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverage": true,
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    }
+  },
   "devDependencies": {
     "babel-cli": "^6.14.0",
     "babel-core": "^6.14.0",
