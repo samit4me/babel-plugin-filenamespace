@@ -8,7 +8,7 @@ Babel plugin to generate a namespace based on filename.
 
 Directories and filenames are typically descriptive by nature, which make them great for namespacing your code.
 
-With modern JS tooling like Babel and Weback using something like `__dirname` or `__filename` can loose it’s meaning due to code bundling. The aim of this plugin is to give that meaning back, by transforming the value `__filenamespace` into a configurable static string representing the filename and path.
+With modern JS tooling like Babel and Weback using something like `__dirname` or `__filename` can lose it’s meaning due to code bundling. The aim of this plugin is to give that meaning back, by transforming the value `__filenamespace` into a configurable static string representing the filename and path.
 
 Originally this was created to help reduce the Boilerplate associated with namespacing [Redux][redux] **Action Types** in large applications. Namespacing [Redux][redux] actions become necessary to avoid conflicts and once you start separating your actions into separate files, this plugin really helps reduce that boilerplate.
 
