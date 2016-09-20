@@ -48,7 +48,7 @@ Specify the plugin in your `.babelrc` with the custom configuration.
 }
 ```
 
-If you are using [ESLint][eslint] you may want to add it as a global
+If you are using [ESLint][eslint] add __filenamespace as a global
 
 ```json
 {
