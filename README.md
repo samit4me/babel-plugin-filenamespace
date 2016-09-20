@@ -2,6 +2,8 @@
 
 Babel plugin to generate a namespace based on filename.
 
+[![Coverage Status](https://coveralls.io/repos/github/samit4me/babel-plugin-filenamespace/badge.svg?branch=master)](https://coveralls.io/github/samit4me/babel-plugin-filenamespace?branch=master)
+
 ## Description
 
 Directories and filenames are typically descriptive by nature, which make them great for namespacing your code.
