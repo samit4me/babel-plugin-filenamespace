@@ -36,7 +36,7 @@ export default ({ types: t }) => ({
         }
 
         // Remove filename if "index" as it is meaningless
-        if (basename !== 'index') {
+        if (!basename.match(/index/i)) {
           filenamespace += `/${basename}`;
         }
 

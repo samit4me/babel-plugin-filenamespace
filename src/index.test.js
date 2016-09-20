@@ -35,7 +35,7 @@ test('__filenamespace is transformed', () => {
 // Files with the name "index" have no meaning and should be ommitted
 test('should omit filename of "index" regardless of cASe', () => {
   const fixture = 'omitIndex';
-  const fixturePath = getTestFilePath(fixture, 'index.js');
+  const fixturePath = getTestFilePath(fixture, 'INdex.js');
   const actual = transformFileSync(fixturePath, babelOptions).code;
   expect(actual).toBe(getExpectedOutput(fixture));
 });
