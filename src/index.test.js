@@ -40,12 +40,12 @@ test('should omit filename of "index" regardless of cASe', () => {
   expect(actual).toBe(getExpectedOutput(fixture));
 });
 
-// Seperate path segments using a dot
-test('should seperate path segments with a dot "."', () => {
-  const fixture = ['seperator', 'dot'];
+// Separate path segments using a dot
+test('should separate path segments with a dot "."', () => {
+  const fixture = ['separator', 'dot'];
   const options = Object.assign({}, babelOptions, {
     plugins: [
-      [pluginPath, { seperator: '.' }],
+      [pluginPath, { separator: '.' }],
     ],
   });
   const actual = transformFileSync(getFixturePath(fixture), options).code;
@@ -53,12 +53,12 @@ test('should seperate path segments with a dot "."', () => {
   expect(actual).toBe(expected);
 });
 
-// Seperate path segments using an emoji 👌 (aka upside down circle punch game)
-test('should seperate path segments with an emoji 👌', () => {
-  const fixture = ['seperator', 'emoji'];
+// Separate path segments using an emoji 👌 (aka upside down circle punch game)
+test('should separate path segments with an emoji 👌', () => {
+  const fixture = ['separator', 'emoji'];
   const options = Object.assign({}, babelOptions, {
     plugins: [
-      [pluginPath, { seperator: '👌' }],
+      [pluginPath, { separator: '👌' }],
     ],
   });
   const actual = transformFileSync(getFixturePath(fixture), options).code;

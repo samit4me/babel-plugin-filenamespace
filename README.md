@@ -117,7 +117,7 @@ Use Babel's plugin options by replacing the plugin string with an array of the p
       "filenamespace",
       {
         "root": "app",
-        "seperator": "."
+        "separator": "."
       }
     ]
   ]
@@ -142,7 +142,7 @@ const moduleNamespace = 'containers.App.data';
       "filenamespace",
       {
         "root": "../",
-        "seperator": "👌"
+        "separator": "👌"
       }
     ]
   ]

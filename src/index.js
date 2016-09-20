@@ -5,7 +5,7 @@ export default ({ types: t }) => ({
     Identifier(path, state) {
       if (path.node.name === '__filenamespace') {
         // Get user settings
-        const { seperator, root } = state.opts;
+        const { separator, root } = state.opts;
 
         // Get file paths
         const { filename, basename, sourceRoot } = state.file.opts;
@@ -40,12 +40,12 @@ export default ({ types: t }) => ({
           filenamespace += `/${basename}`;
         }
 
-        // Strip leading path seperators
+        // Strip leading path separators
         filenamespace = filenamespace.replace(/^\/+/, '');
 
-        // Set custom seperator
-        if (seperator) {
-          filenamespace = filenamespace.replace(/\//g, seperator);
+        // Set custom separator
+        if (separator) {
+          filenamespace = filenamespace.replace(/\//g, separator);
         }
 
         // Replace __filenamespace with the transformed value
