@@ -1,0 +1,27 @@
+version: {build}
+
+# Test against these versions of Node.js
+environment:
+  matrix:
+    - nodejs_version: "6.x"
+    - nodejs_version: "5.x"
+    - nodejs_version: "4.x"
+
+# Fix line endings in Windows. (runs before repo cloning)
+# init:
+#   - git config --global core.autocrlf input
+
+# # Disable automatic builds
+# build: off
+
+# # Custom scripts instead of automatic tests
+# test_script:
+#   # Output debugging info
+#   - node --version
+#   - npm --version
+#   # run build and run tests
+#   - npm run test
+
+
+build:
+  verbosity: minimal
