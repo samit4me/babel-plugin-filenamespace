@@ -24,16 +24,6 @@ Install the plugin
 $ npm i -D babel-plugin-filenamespace
 ```
 
-If you are using [ESLint][eslint] you may want to add it as a global
-
-```json
-{
-  "globals": {
-    "__filenamespace": false
-  }
-}
-```
-
 ### Usage
 
 Specify the plugin in your `.babelrc` with the custom configuration.
@@ -54,6 +44,16 @@ Specify the plugin in your `.babelrc` with the custom configuration.
     "plugins": [
       "filenamespace"
     ]
+  }
+}
+```
+
+If you are using [ESLint][eslint] you may want to add it as a global
+
+```json
+{
+  "globals": {
+    "__filenamespace": false
   }
 }
 ```
