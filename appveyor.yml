@@ -25,4 +25,4 @@ test_script:
   - node --version
   - npm --version
   # run build and run tests
-  - npm run test_script
+  - npm run test
