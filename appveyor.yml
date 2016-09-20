@@ -1,10 +1,9 @@
 version: 1.0.{build}
 
 # Test against these versions of Node.js
+# it seems that appveyor only has 4.4.7 tho
 environment:
   matrix:
-    - nodejs_version: "6.x"
-    - nodejs_version: "5.x"
     - nodejs_version: "4.x"
 
 # Fix line endings in Windows. (runs before repo cloning)
