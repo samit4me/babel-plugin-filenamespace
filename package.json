@@ -5,14 +5,9 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "npm run prepublish && jest",
-    "clean": "rimraf lib dist es coverage",
+    "clean": "rimraf lib coverage",
     "compile": "cross-env NODE_ENV=production babel src --out-dir lib --ignore spec.js,test.js",
     "prepublish": "npm run clean && npm run compile"
-  },
-  "babel": {
-    "presets": [
-      "latest"
-    ]
   },
   "repository": {
     "type": "git",
@@ -21,6 +16,7 @@
   "author": "Samuel Sharpe",
   "license": "MIT",
   "jest": {
+    "scriptPreprocessor": "./node_modules/babel-jest",
     "testEnvironment": "node",
     "collectCoverage": true,
     "coverageThreshold": {
@@ -35,6 +31,7 @@
   "devDependencies": {
     "babel-cli": "^6.14.0",
     "babel-core": "^6.14.0",
+    "babel-jest": "^15.0.0",
     "babel-preset-latest": "^6.14.0",
     "cross-env": "^2.0.1",
     "eslint": "^3.5.0",
