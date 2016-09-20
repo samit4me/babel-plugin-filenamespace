@@ -11,28 +11,43 @@ export default ({ types: t }) => ({
         const { filename, basename, sourceRoot } = state.file.opts;
         const dirname = nodePath.dirname(filename);
 
-        // Set base directory (project source + root specified)
+        // Get namespace root directory (defaults to projectRoot)
+        // modified via user specified plugin option "root"
         let userSetRoot = root;
-        let projectSrc = sourceRoot;
-        if (root) {
-          const dotSlash = root.match(/^\.\//);
-          const dotDotSlash = root.match(/^\.\.\//);
+        let namespaceRoot = sourceRoot;
+        if (userSetRoot) {
+          // remove leading ./ (if it exists) as it adds no value
+          const dotSlash = userSetRoot.match(/^\.\//);
           if (dotSlash) {
             userSetRoot = userSetRoot.replace(/^\.\//, '');
           }
+          // travel up from project dir if userRoot starts with ../, please note
+          // that all ../ path segments will be used and all others will be ignored
+          // for example:
+          // ../ === start from projectFolder
+          // ../../ === start from projectParentFolder
+          // ../folderA/../ === start from projectParentFolder (folderA is ignored)
+          const dotDotSlash = userSetRoot.match(/^\.\.\//);
           if (dotDotSlash) {
-            const sourcePathSegments = sourceRoot.split('/');
+            const sourcePathSegments = namespaceRoot.split('/');
             const rootPathSegments = userSetRoot.split('/');
-            projectSrc = rootPathSegments
+            namespaceRoot = rootPathSegments
               .filter(val => val.match(/^\.\.$/))
               .reduce(acc => acc.slice(0, -1), sourcePathSegments)
               .join('/');
           }
         }
 
-        let filenamespace = dirname.replace(`${projectSrc}`, '');
+        // Set namespace root by stripping out unwanted path segments
+        // example one:
+        // If the babel plugin option root: '../' was set
+        // "C:\Users\sam\myProject" would become "myProject"
+        // example two:
+        // If the babel plugin option root: './src' was set
+        // "C:\Users\sam\myProject" would become "myProject/src"
+        let filenamespace = dirname.replace(namespaceRoot, '');
         if (userSetRoot && filenamespace.startsWith(`/${userSetRoot}`)) {
-          filenamespace = filenamespace.replace(`${userSetRoot}`, '');
+          filenamespace = filenamespace.replace(userSetRoot, '');
         }
 
         // Remove filename if "index" as it is meaningless

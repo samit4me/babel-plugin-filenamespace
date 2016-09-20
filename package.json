@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-filenamespace",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Babel plugin to generate a namespace based on filename",
   "main": "lib/index.js",
   "scripts": {
