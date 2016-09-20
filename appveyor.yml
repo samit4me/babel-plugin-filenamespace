@@ -1,0 +1,27 @@
+version: 1.0.{build}
+
+# Test against these versions of Node.js
+# it seems that appveyor only has 4.4.7 tho
+environment:
+  matrix:
+    - nodejs_version: "4.x"
+
+# Fix line endings in Windows. (runs before repo cloning)
+init:
+  - git config --global core.autocrlf input
+  
+# Install scripts--runs after repo cloning
+install:
+  - npm -g install npm
+  - npm install
+
+# Disable automatic builds
+build: off
+
+# Custom scripts instead of automatic tests
+test_script:
+  # Output debugging info
+  - node --version
+  - npm --version
+  # run build and run tests
+  - npm run test
