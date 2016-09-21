@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-filenamespace",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Babel plugin to generate a namespace based on filename",
   "main": "lib/index.js",
   "scripts": {
@@ -15,6 +15,18 @@
     "type": "git",
     "url": "https://github.com/samit4me/babel-plugin-filenamespace.git"
   },
+  "keywords": [
+    "namespace",
+    "namespacing",
+    "redux",
+    "action",
+    "type",
+    "module",
+    "babel",
+    "babel-plugin",
+    "filename",
+    "dirname"
+  ],
   "author": "Samuel Sharpe",
   "license": "MIT",
   "jest": {
