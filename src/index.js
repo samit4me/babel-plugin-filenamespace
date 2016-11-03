@@ -5,7 +5,7 @@ export default ({ types: t }) => ({
     Identifier(path, state) {
       if (path.node.name === '__filenamespace') {
         // Get user settings
-        const { separator, root } = state.opts;
+        const { separator, root, dropAllFilenames } = state.opts;
 
         // Get file paths
         const { filename, basename, sourceRoot } = state.file.opts;
@@ -50,8 +50,12 @@ export default ({ types: t }) => ({
           filenamespace = filenamespace.replace(userSetRoot, '');
         }
 
-        // Remove filename if "index" as it is meaningless
-        if (!basename.match(/index/i)) {
+        // Add filename to namespace
+        // Do not add filename if either:
+        // - The `dropAllFilenames` plugin option has been set to true, OR
+        // - Filename is "index" as it is meaningless
+        const addFilename = !dropAllFilenames && !basename.match(/index/i);
+        if (addFilename) {
           filenamespace += `/${basename}`;
         }
 
