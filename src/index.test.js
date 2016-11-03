@@ -132,3 +132,16 @@ test('should start the namespace as per basic test and ignore leading ./', () =>
   const expected = fs.readFileSync(getExpectedPath(fixture), { encoding: 'utf8' });
   expect(actual).toBe(expected);
 });
+
+// Plugin option `dropAllFilenames` tests
+test('should omit all filenames when dropAllFilenames: true', () => {
+  const fixture = 'dropAllFilenames';
+  const options = Object.assign({}, babelOptions, {
+    plugins: [
+      [pluginPath, { dropAllFilenames: true }],
+    ],
+  });
+  const actual = transformFileSync(getFixturePath(fixture), options).code;
+  const expected = fs.readFileSync(getExpectedPath(fixture), { encoding: 'utf8' });
+  expect(actual).toBe(expected);
+});

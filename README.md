@@ -83,6 +83,7 @@ app
 |           |__ index.js
 |           |__ actions.js
 |   |__ HomePage
+|       |__ HomePage.js
 |__ package.json
 ```
 
@@ -115,6 +116,9 @@ const LOAD_DATA_ERROR = `${__filenamespace}/LOAD_DATA_ERROR`;
 ### Options
 
 Use Babel's plugin options by replacing the plugin string with an array of the plugin name and an object with the options:
+- `root`: *(Default: project root)* - specify the root of your directory.
+- `separator`: *(Default: "/")* - specify your own directory separator.
+- `dropAllFilenames`: *(Default: false)* - setting to true will exclude the filenames and use the directory structure only.
 
 #### Example 1:
 ```json
@@ -138,7 +142,7 @@ In `app/container/App/data/index.js`
 const moduleNamespace = __filenamespace;
 
 // Will be transformed into something like this
-const moduleNamespace = 'containers.App.data';
+const moduleNamespace = 'container.App.data';
 ```
 
 #### Example 2:
@@ -163,7 +167,32 @@ In `app/container/App/data/index.js`
 const moduleNamespace = __filenamespace;
 
 // Will be transformed into something like this
-const moduleNamespace = 'projectFolder👌app👌containers👌App👌data';
+const moduleNamespace = 'projectFolder👌app👌container👌App👌data';
+```
+
+#### Example 3:
+```json
+{
+  "plugins": [
+    [
+      "filenamespace",
+      {
+        "root": "app/container",
+        "dropAllFilenames": true
+      }
+    ]
+  ]
+}
+```
+
+In `app/container/HomePage/HomePage.js`
+
+```javascript
+// Something like this
+const moduleNamespace = __filenamespace;
+
+// Will be transformed into something like this
+const moduleNamespace = 'HomePage';
 ```
 
 ## License
