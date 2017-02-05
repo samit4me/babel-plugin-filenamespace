@@ -1,3 +1,6 @@
+## 1.1.3 (February 5, 2017)
+* Update dependencies
+
 ## 1.1.2 (November 26, 2016)
 * Update dependencies
 * Add CHANGELOG
