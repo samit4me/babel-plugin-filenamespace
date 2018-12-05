@@ -8,13 +8,14 @@ export default ({ types: t }) => ({
         const { separator, root, dropAllFilenames } = state.opts;
 
         // Get file paths
-        const { filename, basename, sourceRoot } = state.file.opts;
+        const { filename, sourceRoot } = state.file.opts;
         const dirname = nodePath.dirname(filename);
+        const basename = nodePath.basename(filename, nodePath.extname(filename));
 
         // Get namespace root directory (defaults to projectRoot)
         // modified via user specified plugin option "root"
         let userSetRoot = root;
-        let namespaceRoot = sourceRoot;
+        let namespaceRoot = sourceRoot || state.cwd;
         if (userSetRoot) {
           // remove leading ./ (if it exists) as it adds no value
           const dotSlash = userSetRoot.match(/^\.\//);
