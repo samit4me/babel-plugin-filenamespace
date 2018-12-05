@@ -1,3 +1,7 @@
+## 1.2.0 (December 5, 2018)
+* Update dependencies
+* Fix issue where plugin would not work with some projects using Babel 7.
+
 ## 1.1.3 (February 5, 2017)
 * Update dependencies
 
