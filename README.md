@@ -1,6 +1,6 @@
 # babel-plugin-filenamespace
 
-Babel plugin to generate a namespace based on filename.
+Babel plugin to generate a namespace _(a.k.a string)_ based on filename.
 
 [![Build Status](https://travis-ci.org/samit4me/babel-plugin-filenamespace.svg?branch=master)](https://travis-ci.org/samit4me/babel-plugin-filenamespace)
 [![Build status](https://ci.appveyor.com/api/projects/status/j63t7l2wwaqu3h0i?svg=true)](https://ci.appveyor.com/project/samit4me/babel-plugin-filenamespace)
@@ -13,28 +13,35 @@ Babel plugin to generate a namespace based on filename.
 
 Directories and filenames are typically descriptive by nature, which make them great for namespacing your code.
 
-With modern JS tooling like Babel and Weback using something like `__dirname` or `__filename` can lose it’s meaning due to code bundling. The aim of this plugin is to give that meaning back, by transforming the value `__filenamespace` into a configurable static string representing the filename and path.
+> Think redux action types, unit test describe blocks or for organising storybook stories.
 
-Originally this was created to help reduce the Boilerplate associated with namespacing [Redux][redux] **Action Types** in large applications. Namespacing [Redux][redux] actions become necessary to avoid conflicts and once you start separating your actions into separate files, this plugin really helps reduce that boilerplate.
+The node modules [__dirname][__dirname] and [__filename][__filename] are perfect for this, but there is a problem, with code bundling and client-side JS these modules lose their meaning. The purpose of this plugin is to give that meaning back.
 
-## Usage Instructions
+```javascript
+// src/components/Button.test.js
+describe(__filenamespace, () => {
+  it('should ...', () => {
+    // ...
+  })
+})
+```
+```javascript
+// is transformed into
+describe('src/components/Button', () => {
+  it('should ...', () => {
+    // ...
+  })
+})
+```
 
-### Requirements
-
-This is a [Babel][babel] plugin and will requires Babel v6 to run.
-
-### Installation
-
-Install the plugin
+## Installation
 
 ```
-$ npm i -D babel-plugin-filenamespace
+npm install --save-dev babel-plugin-filenamespace
 ```
 
-### Usage
-
-Specify the plugin in your `.babelrc` with the custom configuration.
-
+## Usage
+Via `.babelrc` (Recommended)
 ```json
 {
   "plugins": [
@@ -42,9 +49,7 @@ Specify the plugin in your `.babelrc` with the custom configuration.
   ]
 }
 ```
-
-**Or In package.json:**
-
+or via `package.json`
 ```json
 {
   "babel": {
@@ -55,7 +60,7 @@ Specify the plugin in your `.babelrc` with the custom configuration.
 }
 ```
 
-If you are using [ESLint][eslint] add __filenamespace as a global
+Using [ESLint][eslint]? Add **__filenamespace** as a global
 
 ```json
 {
@@ -65,62 +70,22 @@ If you are using [ESLint][eslint] add __filenamespace as a global
 }
 ```
 
-Then in any file you want a filename based namespace generated use the keyword **__filenamespace**.
-
-### Example:
-
-Given the directory structure:
-
-```
-app
-|__ components
-|   |__ ListItem
-|       |__index.js
-|__ containers
-|   |__ App
-|       |__ index.js
-|       |__ data
-|           |__ index.js
-|           |__ actions.js
-|   |__ HomePage
-|       |__ HomePage.js
-|__ package.json
-```
-
-In `app/container/App/data/index.js`
-
-```javascript
-// Something like this
-const moduleNamespace = __filenamespace;
-
-// Will be transformed into something like this (index is meaningless so it is dropped)
-const moduleNamespace = 'app/containers/App/data';
-```
-
-
-In `app/container/App/data/actions.js`
-
-```javascript
-// Something like this
-const moduleNamespace = __filenamespace;
-
-// Will be transformed into something like this
-const moduleNamespace = 'app/containers/App/data/actions';
-
-// Which allows you to reduce boilerplate and conflicts
-const LOAD_DATA = `${__filenamespace}/LOAD_DATA`;
-const LOAD_DATA_SUCCESS = `${__filenamespace}/LOAD_DATA_SUCCESS`;
-const LOAD_DATA_ERROR = `${__filenamespace}/LOAD_DATA_ERROR`;
-```
+Then in any file you want a filename based namespace generated use the placeholder **__filenamespace**.
 
 ### Options
 
 Use Babel's plugin options by replacing the plugin string with an array of the plugin name and an object with the options:
-- `root`: *(Default: project root)* - specify the root of your directory.
+- `root`: *(Default: project root)* - specify your own root directory (e.g. src).
 - `separator`: *(Default: "/")* - specify your own directory separator.
-- `dropAllFilenames`: *(Default: false)* - setting to true will exclude the filenames and use the directory structure only.
+- `dropAllFilenames`*: *(Default: false)* - setting to true will exclude the filenames and use the directory structure only.
+   - _**Note:** `index` files or filenames that match the parent directory name do not provide meaning, so the filename is always dropped_.
+- `dropExtensions`**: *(Default: [".spec", ".test", ".story", ".stories"])* - specify the extensions you want removed.
+   - _**Note:** file extension are always removed, these extensions for naming conventions (e.g. `path/to/file.test.js` will transform to `path/to/file`)_.
+- `customPlaceholders`: *(Default: [])* - starting with **v2** you can configure multiple custom placeholders, each with their own configuration made up of the options above e.g. `[{ "placeholder": "__testnamespace", "separator": "." }]`.
 
-#### Example 1:
+## Examples
+
+#### `root` example:
 ```json
 {
   "plugins": [
@@ -128,31 +93,28 @@ Use Babel's plugin options by replacing the plugin string with an array of the p
       "filenamespace",
       {
         "root": "app",
-        "separator": "."
       }
     ]
   ]
 }
 ```
 
-In `app/container/App/data/index.js`
-
 ```javascript
-// Something like this
-const moduleNamespace = __filenamespace;
-
-// Will be transformed into something like this
-const moduleNamespace = 'container.App.data';
+// app/container/App/data/file.js
+const namespace = __filenamespace;
+```
+```javascript
+// is transformed into
+const namespace = 'container/App/data/file';
 ```
 
-#### Example 2:
+#### `separator` example:
 ```json
 {
   "plugins": [
     [
       "filenamespace",
       {
-        "root": "../",
         "separator": "👌"
       }
     ]
@@ -160,24 +122,22 @@ const moduleNamespace = 'container.App.data';
 }
 ```
 
-In `app/container/App/data/index.js`
-
 ```javascript
-// Something like this
-const moduleNamespace = __filenamespace;
-
-// Will be transformed into something like this
-const moduleNamespace = 'projectFolder👌app👌container👌App👌data';
+// app/container/App/data/file.js
+const namespace = __filenamespace;
+```
+```javascript
+// is transformed into
+const namespace = 'app👌container👌App👌data👌file';
 ```
 
-#### Example 3:
+#### `dropAllFilenames` example:
 ```json
 {
   "plugins": [
     [
       "filenamespace",
       {
-        "root": "app/container",
         "dropAllFilenames": true
       }
     ]
@@ -185,14 +145,68 @@ const moduleNamespace = 'projectFolder👌app👌container👌App👌data';
 }
 ```
 
-In `app/container/HomePage/HomePage.js`
+```javascript
+// app/container/HomePage/Home.js
+const namespace = __filenamespace;
+```
+```javascript
+// is transformed into
+const namespace = 'app/container/HomePage';
+```
+
+#### `dropExtensions` example:
+```json
+{
+  "plugins": [
+    [
+      "filenamespace",
+      {
+        "dropExtensions": [".test"]
+      }
+    ]
+  ]
+}
+```
 
 ```javascript
-// Something like this
-const moduleNamespace = __filenamespace;
+// app/container/HomePage/Home.test.js
+const namespace = __filenamespace;
+```
+```javascript
+// is transformed into
+const namespace = 'app/container/HomePage/Home';
+```
 
-// Will be transformed into something like this
-const moduleNamespace = 'HomePage';
+#### `customPlaceholders` extension:
+
+```json
+{
+  "plugins": [
+    [
+      "filenamespace",
+      {
+        "separator": "."
+        "customPlaceholders": [
+          { "placeholder": "__dotDot", "separator": ".." },
+          { "placeholder": "__dotDotDot", "separator": "..." }
+        ]
+      }
+    ]
+  ]
+}
+```
+
+```javascript
+// app/container/App/data/file.js
+const namespace = __filenamespace;
+const dotDotNamespace = __dotDot;
+const dotDotDotNamespace = __dotDotDot;
+```
+```javascript
+// is transformed into
+const namespace = 'container.App.data.file';
+const dotDotNamespace = 'container..App..data..file';
+const dotDotDotNamespace = 'container...App...data...file';
 ```
 
 ## License
@@ -202,3 +216,5 @@ MIT, see [LICENSE](LICENSE) for details.
 [redux]: https://github.com/reactjs/redux
 [babel]: https://babeljs.io
 [eslint]: http://eslint.org/
+[__dirname]: https://nodejs.org/api/modules.html#modules_dirname
+[__filename]: https://nodejs.org/api/modules.html#modules_filename

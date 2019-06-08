@@ -1,5 +1,12 @@
 const nodePath = require('path');
 
+export const defaultDropExtensions = [
+  '.spec',
+  '.test',
+  '.story',
+  '.stories',
+];
+
 const normalisePathSep = path => (path
   ? path.replace(/\\/g, '/')
   : path
@@ -8,21 +15,50 @@ const removeLeadingDotSlash = path => (path && path.match(/^\.\//)
   ? path.replace(/^\.\//, '')
   : path
 );
+const buildPluginConfig = opts => ({
+  dropAllFilenames: opts && opts.dropAllFilenames,
+  dropExtensions: (opts && opts.dropExtensions) || defaultDropExtensions,
+  separator: opts && opts.separator,
+  userSetRoot: opts && removeLeadingDotSlash(normalisePathSep(opts.root)),
+});
+const getConfigIfNodeTransformable = (path, state) => {
+  // Node matches default placeholder (added in v1).
+  if (path.node.name === '__filenamespace') {
+    return buildPluginConfig(state.opts);
+  }
+  // Node matches custom placeholder (added in v2).
+  // Note: always choose 1st one if duplicates exist.
+  const placeholder = (state.opts.customPlaceholders || [])
+    .filter(x => x && x.placeholder === path.node.name)[0];
+  if (placeholder) {
+    return buildPluginConfig(placeholder);
+  }
+  // Not a transformable node.
+  return false;
+};
 
 export default ({ types: t }) => ({
   visitor: {
     Identifier(path, state) {
-      if (path.node.name === '__filenamespace') {
-        // Get user settings
-        const { separator, dropAllFilenames } = state.opts;
-        const userSetRoot = removeLeadingDotSlash(normalisePathSep(state.opts.root));
+      const pluginConfig = getConfigIfNodeTransformable(path, state);
+      if (pluginConfig) {
+        // Plugin config
+        const {
+          dropAllFilenames,
+          dropExtensions,
+          separator,
+          userSetRoot,
+        } = pluginConfig;
 
         // Get file paths
         const cwd = normalisePathSep(state.cwd);
         const sourceRoot = normalisePathSep(state.file.opts.sourceRoot);
         const filename = normalisePathSep(state.file.opts.filename);
         const dirname = nodePath.dirname(filename);
-        const basename = nodePath.basename(filename, nodePath.extname(filename));
+        const basename = [nodePath.extname(filename)].concat(dropExtensions).reduce(
+          (acc, ext) => nodePath.basename(acc, ext),
+          filename,
+        );
 
         // Get namespace root directory (defaults to projectRoot)
         // modified via user specified plugin option "root"
