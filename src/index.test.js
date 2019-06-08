@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
-import { transformFileSync } from 'babel-core';
+import { transformFileSync } from '@babel/core';
 
 // Common test data
 const projectRoot = path.resolve(__dirname, '..');
@@ -24,8 +23,16 @@ const getExpectedOutput = pathSegments => fs.readFileSync(getExpectedPath(pathSe
   encoding: 'utf8',
 });
 
+// No transform test
+it('should leave file as is if no __filenamespace is present', () => {
+  const fixture = 'noTransformation';
+  const actual = transformFileSync(getFixturePath(fixture), babelOptions).code;
+  const expected = fs.readFileSync(getExpectedPath(fixture), { encoding: 'utf8' });
+  expect(actual).toBe(expected);
+});
+
 // Basic no frills transform test
-test('__filenamespace is transformed', () => {
+it('__filenamespace is transformed', () => {
   const fixture = 'basic';
   const actual = transformFileSync(getFixturePath(fixture), babelOptions).code;
   const expected = fs.readFileSync(getExpectedPath(fixture), { encoding: 'utf8' });
@@ -33,7 +40,7 @@ test('__filenamespace is transformed', () => {
 });
 
 // Files with the name "index" have no meaning and should be ommitted
-test('should omit filename of "index" regardless of cASe', () => {
+it('should omit filename of "index" regardless of cASe', () => {
   const fixture = 'omitIndex';
   const fixturePath = getTestFilePath(fixture, 'INdex.js');
   const actual = transformFileSync(fixturePath, babelOptions).code;
@@ -41,7 +48,7 @@ test('should omit filename of "index" regardless of cASe', () => {
 });
 
 // Separate path segments using a dot
-test('should separate path segments with a dot "."', () => {
+it('should separate path segments with a dot "."', () => {
   const fixture = ['separator', 'dot'];
   const options = Object.assign({}, babelOptions, {
     plugins: [
@@ -54,7 +61,7 @@ test('should separate path segments with a dot "."', () => {
 });
 
 // Separate path segments using an emoji 👌 (aka upside down circle punch game)
-test('should separate path segments with an emoji 👌', () => {
+it('should separate path segments with an emoji 👌', () => {
   const fixture = ['separator', 'emoji'];
   const options = Object.assign({}, babelOptions, {
     plugins: [
@@ -67,7 +74,7 @@ test('should separate path segments with an emoji 👌', () => {
 });
 
 // Specifying a root directory as one of the folders living in the project root
-test('should start the namespace one folder deeper than project src', () => {
+it('should start the namespace one folder deeper than project src', () => {
   const fixture = ['root', 'singleFolder'];
   const options = Object.assign({}, babelOptions, {
     plugins: [
@@ -80,7 +87,7 @@ test('should start the namespace one folder deeper than project src', () => {
 });
 
 // Specifying a root directory as a path (ONLY forward slashes are excepted)
-test('should start the namespace from the root path specified', () => {
+it('should start the namespace from the root path specified', () => {
   const fixture = ['root', 'path'];
   const options = Object.assign({}, babelOptions, {
     plugins: [
@@ -93,7 +100,7 @@ test('should start the namespace from the root path specified', () => {
 });
 
 // Specifying a root directory using ../
-test('should start the namespace with the project folder', () => {
+it('should start the namespace with the project folder', () => {
   const fixture = ['root', 'projectFolder'];
   const options = Object.assign({}, babelOptions, {
     plugins: [
@@ -106,7 +113,7 @@ test('should start the namespace with the project folder', () => {
 });
 
 // Specifying a root directory using ../../
-test('should start the namespace with the projects parent folder', () => {
+it('should start the namespace with the projects parent folder', () => {
   const fixture = ['root', 'projectFolder'];
   const options = Object.assign({}, babelOptions, {
     plugins: [
@@ -121,7 +128,7 @@ test('should start the namespace with the projects parent folder', () => {
 });
 
 // Specifying a root directory using ./basic
-test('should start the namespace as per basic test and ignore leading ./', () => {
+it('should start the namespace as per basic test and ignore leading ./', () => {
   const fixture = 'basic';
   const options = Object.assign({}, babelOptions, {
     plugins: [
@@ -134,7 +141,7 @@ test('should start the namespace as per basic test and ignore leading ./', () =>
 });
 
 // Plugin option `dropAllFilenames` tests
-test('should omit all filenames when dropAllFilenames: true', () => {
+it('should omit all filenames when dropAllFilenames: true', () => {
   const fixture = 'dropAllFilenames';
   const options = Object.assign({}, babelOptions, {
     plugins: [

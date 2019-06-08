@@ -1,15 +1,15 @@
 {
   "name": "babel-plugin-filenamespace",
-  "version": "1.2.0",
+  "version": "2.0.0-beta.0",
   "description": "Babel plugin to generate a namespace based on filename",
   "main": "lib/index.js",
   "scripts": {
-    "build": "cross-env NODE_ENV=production babel src --out-dir lib --ignore spec.js,test.js",
+    "build": "cross-env NODE_ENV=production babel src --out-dir lib --ignore 'src/**/*.spec.js','src/**/*.test.js'",
     "clean": "rimraf lib coverage",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "prepublish": "npm run clean && npm run build",
+    "prepare": "npm run clean && npm run build",
     "lint": "eslint . --ignore-path .gitignore --ignore-pattern testFixtures",
-    "test": "npm run prepublish && npm run lint && jest --coverage"
+    "test": "npm run prepare && npm run lint && jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -42,19 +42,19 @@
     }
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-jest": "^23.6.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "coveralls": "^3.0.2",
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^24.8.0",
+    "coveralls": "^3.0.4",
     "cross-env": "^5.2.0",
-    "eslint": "^5.9.0",
+    "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.2",
-    "eslint-plugin-react": "^7.11.1",
-    "jest-cli": "^23.6.0",
-    "rimraf": "^2.6.2"
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.13.0",
+    "jest-cli": "^24.8.0",
+    "rimraf": "^2.6.3"
   }
 }
