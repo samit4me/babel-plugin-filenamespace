@@ -2,6 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import { transformFileSync } from '@babel/core';
 
+import { defaultDropExtensions } from './index';
+
 // Common test data
 const projectRoot = path.resolve(__dirname, '..');
 const testFixturesRoot = path.resolve(__dirname, '..', 'testFixtures');
@@ -17,11 +19,9 @@ const getTestFilePath = (pathSegments, filename) => {
   }
   return testFilePath;
 };
-const getFixturePath = pathSegments => getTestFilePath(pathSegments, 'fixture.js');
-const getExpectedPath = pathSegments => getTestFilePath(pathSegments, 'expected.js');
-const getExpectedOutput = pathSegments => fs.readFileSync(getExpectedPath(pathSegments), {
-  encoding: 'utf8',
-});
+const getFixturePath = (pathSegments, filename = 'fixture.js') => getTestFilePath(pathSegments, filename);
+const getExpectedPath = (pathSegments, filename = 'expected.js') => getTestFilePath(pathSegments, filename);
+const getExpectedOutput = pathSegments => fs.readFileSync(getExpectedPath(pathSegments), { encoding: 'utf8' });
 
 // No transform test
 it('should leave file as is if no __filenamespace is present', () => {
@@ -146,6 +146,112 @@ it('should omit all filenames when dropAllFilenames: true', () => {
   const options = Object.assign({}, babelOptions, {
     plugins: [
       [pluginPath, { dropAllFilenames: true }],
+    ],
+  });
+  const actual = transformFileSync(getFixturePath(fixture), options).code;
+  const expected = fs.readFileSync(getExpectedPath(fixture), { encoding: 'utf8' });
+  expect(actual).toBe(expected);
+});
+
+// Drop file extensions
+it('should omit file extension', () => {
+  const fixture = 'basic';
+  const actual = transformFileSync(getFixturePath(fixture), babelOptions).code;
+  const expected = fs.readFileSync(getExpectedPath(fixture), { encoding: 'utf8' });
+  expect(actual).toBe(expected);
+});
+
+// Plugin option `dropExtensions` tests
+defaultDropExtensions.forEach((ext) => {
+  it(`should omit ${ext} extensions when dropExtensions is NOT specified`, () => {
+    const fixture = ['dropExtensions', ext.substr(1)];
+    const actual = transformFileSync(getFixturePath(fixture, `fixture${ext}.js`), babelOptions).code;
+    const expected = fs.readFileSync(getExpectedPath(fixture), { encoding: 'utf8' });
+    expect(actual).toBe(expected);
+  });
+});
+defaultDropExtensions.forEach((ext) => {
+  it(`should omit ${ext} extensions when dropExtensions is specified`, () => {
+    const fixture = ['dropExtensions', ext.substr(1)];
+    const options = Object.assign({}, babelOptions, {
+      plugins: [
+        [pluginPath, { dropExtensions: [ext] }],
+      ],
+    });
+    const actual = transformFileSync(getFixturePath(fixture, `fixture${ext}.js`), options).code;
+    const expected = fs.readFileSync(getExpectedPath(fixture), { encoding: 'utf8' });
+    expect(actual).toBe(expected);
+  });
+});
+
+// Custom placeholders
+it('should suppport custom placeholders', () => {
+  const fixture = ['customPlaceholders'];
+  const options = Object.assign({}, babelOptions, {
+    plugins: [
+      [
+        pluginPath,
+        {
+          customPlaceholders: [
+            { placeholder: '__customPlaceholder' },
+          ],
+        },
+      ],
+    ],
+  });
+  const actual = transformFileSync(getFixturePath(fixture), options).code;
+  const expected = fs.readFileSync(getExpectedPath(fixture), { encoding: 'utf8' });
+  expect(actual).toBe(expected);
+});
+
+// Default and custom placeholders together
+it('should suppport default and custom placeholders together', () => {
+  const fixture = ['defaultAndCustomPlaceholders'];
+  const options = Object.assign({}, babelOptions, {
+    plugins: [
+      [
+        pluginPath,
+        {
+          customPlaceholders: [
+            { placeholder: '__customPlaceholder' },
+          ],
+        },
+      ],
+    ],
+  });
+  const actual = transformFileSync(getFixturePath(fixture), options).code;
+  const expected = fs.readFileSync(getExpectedPath(fixture), { encoding: 'utf8' });
+  expect(actual).toBe(expected);
+});
+
+// All possible options
+it('should suppport default and custom placeholders together using all possible options', () => {
+  const fixture = ['allOptions'];
+  const options = Object.assign({}, babelOptions, {
+    plugins: [
+      [
+        pluginPath,
+        {
+          separator: '.',
+          root: 'testFixtures',
+          dropAllFilenames: true,
+
+          customPlaceholders: [
+            {
+              placeholder: '__customOne',
+              separator: ':',
+              root: './allOptions',
+              dropAllFilenames: true,
+            },
+            {
+              placeholder: '__customTwo',
+              separator: '::',
+              root: '../',
+              dropAllFilenames: false,
+            },
+          ],
+        },
+      ],
     ],
   });
   const actual = transformFileSync(getFixturePath(fixture), options).code;

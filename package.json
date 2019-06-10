@@ -16,22 +16,32 @@
     "url": "https://github.com/samit4me/babel-plugin-filenamespace.git"
   },
   "keywords": [
+    "action types",
+    "babel",
+    "babel-plugin",
+    "ddd",
+    "domain driven design",
+    "module",
     "namespace",
     "namespacing",
     "redux",
-    "action",
+    "storybook",
+    "test",
     "type",
-    "module",
-    "babel",
-    "babel-plugin",
     "filename",
     "dirname"
   ],
   "author": "Samuel Sharpe",
   "license": "MIT",
   "jest": {
+    "testMatch": [
+      "<rootDir>/src/**/*.test.[tj]s?(x)"
+    ],
     "testEnvironment": "node",
     "collectCoverage": true,
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/src/"
+    ],
     "coverageThreshold": {
       "global": {
         "branches": 80,
