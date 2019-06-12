@@ -51,8 +51,7 @@ export default ({ types: t }) => ({
         } = pluginConfig;
 
         // Get file paths
-        const cwd = normalisePathSep(state.cwd);
-        const sourceRoot = normalisePathSep(state.file.opts.sourceRoot);
+        const projectRoot = normalisePathSep(state.cwd);
         const filename = normalisePathSep(state.file.opts.filename);
         const dirname = nodePath.dirname(filename);
         const basename = [nodePath.extname(filename)].concat(dropExtensions).reduce(
@@ -62,7 +61,7 @@ export default ({ types: t }) => ({
 
         // Get namespace root directory (defaults to projectRoot)
         // modified via user specified plugin option "root"
-        let namespaceRoot = sourceRoot || cwd;
+        let namespaceRoot = projectRoot;
         if (userSetRoot) {
           // travel up from project dir if userRoot starts with ../, please note
           // that all ../ path segments will be used and all others will be ignored

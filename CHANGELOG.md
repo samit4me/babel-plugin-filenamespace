@@ -1,3 +1,11 @@
+## 2.0.0 (June 13, 2019)
+- Add `customPlaceholders` option to allow for multiple custom placeholders.
+- Add `dropExtensions` option to allow file extensions to be dropped (e.g. file.test.js >> file).
+- Migrate from npm prepublish to prepare.
+- Update dependencies.
+    - Babel 7
+    - Jest 24
+
 ## 1.2.0 (December 5, 2018)
 * Update dependencies
 * Fix issue where plugin would not work with some projects using Babel 7.
