@@ -1,3 +1,6 @@
+## 2.0.1 (June 13, 2019)
+- Update README.
+
 ## 2.0.0 (June 13, 2019)
 - Add `customPlaceholders` option to allow for multiple custom placeholders.
 - Add `dropExtensions` option to allow file extensions to be dropped (e.g. file.test.js >> file).
