@@ -190,7 +190,7 @@ const namespace = 'app/container/HomePage/Home';
     [
       "filenamespace",
       {
-        "separator": "."
+        "separator": ".",
         "customPlaceholders": [
           { "placeholder": "__dotDot", "separator": ".." },
           { "placeholder": "__dotDotDot", "separator": "..." }
