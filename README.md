@@ -13,9 +13,9 @@ Babel plugin to generate a namespace _(a.k.a string)_ based on filename.
 
 Directories and filenames are typically descriptive by nature, which make them great for namespacing your code.
 
-> Think redux action types, unit test describe blocks or for organising storybook stories.
+> Think about [redux action types][reduxActionType], unit test [describe][jestDescribe] blocks, [storybook stories][storyNesting].
 
-The node modules [__dirname][__dirname] and [__filename][__filename] are perfect for this, but there is a problem, with code bundling and client-side JS these modules lose their meaning. The purpose of this plugin is to give that meaning back.
+[__dirname][__dirname] and [__filename][__filename] are perfect for this, but with code bundling and client-side JS they lose their meaning. The purpose of this plugin is to give that meaning back.
 
 ```javascript
 // src/components/Button.test.js
@@ -60,7 +60,7 @@ or via `package.json`
 }
 ```
 
-Using [ESLint][eslint]? Add **__filenamespace** as a global
+Using [ESLint][eslint]?
 
 ```json
 {
@@ -75,13 +75,13 @@ Then in any file you want a filename based namespace generated use the placehold
 ### Options
 
 Use Babel's plugin options by replacing the plugin string with an array of the plugin name and an object with the options:
-- `root`: *(Default: project root)* - specify your own root directory (e.g. src).
-- `separator`: *(Default: "/")* - specify your own directory separator.
-- `dropAllFilenames`*: *(Default: false)* - setting to true will exclude the filenames and use the directory structure only.
-   - _**Note:** `index` files or filenames that match the parent directory name do not provide meaning, so the filename is always dropped_.
-- `dropExtensions`**: *(Default: [".spec", ".test", ".story", ".stories"])* - specify the extensions you want removed.
-   - _**Note:** file extension are always removed, these extensions for naming conventions (e.g. `path/to/file.test.js` will transform to `path/to/file`)_.
-- `customPlaceholders`: *(Default: [])* - starting with **v2** you can configure multiple custom placeholders, each with their own configuration made up of the options above e.g. `[{ "placeholder": "__testnamespace", "separator": "." }]`.
+- `root`: *(Default: project root)* - specify root directory relative to project src (e.g. src).
+- `separator`: *(Default: "/")* - specify directory separator.
+- `dropAllFilenames`: *(Default: false)* - setting to true will exclude all filenames and use directory structure only.
+   - _**Note:** files named `index` OR have a name that match the parent directory (file extention ignored) are always dropped, regardless of this setting, as they do not provide meaning_.
+- `dropExtensions`: *(Default: [".spec", ".test", ".story", ".stories"])* - specify the extensions you want removed.
+   - _**Note:** file extension are always removed, these extensions are for removing extensions from common file naming conventions (e.g. `path/to/file.test.js` will transform to `path/to/file`)_.
+- `customPlaceholders`: *(Default: [])* - specify custom placeholders, each with their own configuration (all above options) e.g. `[{ "placeholder": "__testnamespace", "separator": "." }]`.
 
 ## Examples
 
@@ -213,8 +213,9 @@ const dotDotDotNamespace = 'container...App...data...file';
 
 MIT, see [LICENSE](LICENSE) for details.
 
-[redux]: https://github.com/reactjs/redux
-[babel]: https://babeljs.io
-[eslint]: http://eslint.org/
 [__dirname]: https://nodejs.org/api/modules.html#modules_dirname
 [__filename]: https://nodejs.org/api/modules.html#modules_filename
+[eslint]: http://eslint.org/
+[jestDescribe]: https://jestjs.io/docs/en/api#describename-fn
+[reduxActionType]: https://redux.js.org/basics/actions#actions
+[storyNesting]: https://storybook.js.org/docs/basics/writing-stories/#nesting-stories
