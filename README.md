@@ -72,20 +72,25 @@ Using [ESLint][eslint]?
 
 Then in any file you want a filename based namespace generated use the placeholder **__filenamespace**.
 
-### Options
+## Options
 
 Use Babel's plugin options by replacing the plugin string with an array of the plugin name and an object with the options:
-- `root`: *(Default: project root)* - specify root directory relative to project src (e.g. src).
-- `separator`: *(Default: "/")* - specify directory separator.
-- `dropAllFilenames`: *(Default: false)* - setting to true will exclude all filenames and use directory structure only.
+- [`root`](#root-example): *(Default: project root)*
+   - specify root directory relative to project src (e.g. src).
+- [`separator`](#separator-example): *(Default: "/")*
+   - specify directory separator.
+- [`dropAllFilenames`](#dropallfilenames-example): *(Default: false)*
+   - setting to true will exclude all filenames and use directory structure only.
    - _**Note:** files named `index` OR have a name that match the parent directory (file extention ignored) are always dropped, regardless of this setting, as they do not provide meaning_.
-- `dropExtensions`: *(Default: [".spec", ".test", ".story", ".stories"])* - specify the extensions you want removed.
+- [`dropExtensions`](#dropextensions-example): *(Default: [".spec", ".test", ".story", ".stories"])*
+   - specify the extensions you want removed.
    - _**Note:** file extension are always removed, these extensions are for removing extensions from common file naming conventions (e.g. `path/to/file.test.js` will transform to `path/to/file`)_.
-- `customPlaceholders`: *(Default: [])* - specify custom placeholders, each with their own configuration (all above options) e.g. `[{ "placeholder": "__testnamespace", "separator": "." }]`.
+- [`customPlaceholders`](#customplaceholders-extension): *(Default: [])*
+   - specify custom placeholders, each with their own configuration (all above options) e.g. `[{ "placeholder": "__testnamespace", "separator": "." }]`.
 
 ## Examples
 
-#### `root` example:
+### `root` example:
 ```json
 {
   "plugins": [
@@ -108,7 +113,7 @@ const namespace = __filenamespace;
 const namespace = 'container/App/data/file';
 ```
 
-#### `separator` example:
+### `separator` example:
 ```json
 {
   "plugins": [
@@ -131,7 +136,7 @@ const namespace = __filenamespace;
 const namespace = 'app👌container👌App👌data👌file';
 ```
 
-#### `dropAllFilenames` example:
+### `dropAllFilenames` example:
 ```json
 {
   "plugins": [
@@ -154,7 +159,7 @@ const namespace = __filenamespace;
 const namespace = 'app/container/HomePage';
 ```
 
-#### `dropExtensions` example:
+### `dropExtensions` example:
 ```json
 {
   "plugins": [
@@ -177,7 +182,7 @@ const namespace = __filenamespace;
 const namespace = 'app/container/HomePage/Home';
 ```
 
-#### `customPlaceholders` extension:
+### `customPlaceholders` extension:
 
 ```json
 {
