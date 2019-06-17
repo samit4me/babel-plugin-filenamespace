@@ -1,5 +1,6 @@
-# 📂 babel-plugin-filenamespace
-Babel plugin to generate a namespace _(a.k.a string)_ based on filename.
+<div align="center">
+<h1>babel-plugin-filenamespace 📂</h1>
+Babel plugin to generate a namespace <i>(a.k.a string)</i> based on filename.
 
 [![Build Status](https://travis-ci.org/samit4me/babel-plugin-filenamespace.svg?branch=master)](https://travis-ci.org/samit4me/babel-plugin-filenamespace)
 [![Build status](https://ci.appveyor.com/api/projects/status/j63t7l2wwaqu3h0i?svg=true)](https://ci.appveyor.com/project/samit4me/babel-plugin-filenamespace)
@@ -7,8 +8,24 @@ Babel plugin to generate a namespace _(a.k.a string)_ based on filename.
 [![dependencies Status](https://david-dm.org/samit4me/babel-plugin-filenamespace/status.svg)](https://david-dm.org/samit4me/babel-plugin-filenamespace)
 [![devDependencies Status](https://david-dm.org/samit4me/babel-plugin-filenamespace/dev-status.svg)](https://david-dm.org/samit4me/babel-plugin-filenamespace?type=dev)
 
+[![Watch on GitHub][github-watch-badge]][github-watch]
+[![Star on GitHub][github-star-badge]][github-star]
+[![Tweet][twitter-badge]][twitter]
 
-## Description
+</div>
+<hr />
+
+[📄Description](#📄-description)<br />
+[📦Install](#📦-install)<br />
+[🚀Usage](#🚀-usage)<br />
+[⚙️Options](#⚙️-options)<br />
+[✨Examples](#✨-examples)<br />
+[🤝Contributing](#🤝-contributing)<br />
+[📝License](#📝-license)<br />
+
+<hr />
+
+## 📄 Description
 
 Directories and filenames are typically descriptive by nature, which make them great for namespacing your code.
 
@@ -18,28 +35,20 @@ Directories and filenames are typically descriptive by nature, which make them g
 
 ```javascript
 // src/components/Button.test.js
-describe(__filenamespace, () => {
-  it('should ...', () => {
-    // ...
-  })
-})
+describe(__filenamespace, () => {})
 ```
 ```javascript
 // is transformed into
-describe('src/components/Button', () => {
-  it('should ...', () => {
-    // ...
-  })
-})
+describe('src/components/Button', () => {})
 ```
 
-## Installation
+## 📦 Install
 
 ```
 npm install --save-dev babel-plugin-filenamespace
 ```
 
-## Usage
+## 🚀 Usage
 Via `.babelrc`
 ```json
 {
@@ -61,7 +70,7 @@ Using [ESLint][eslint]?
 
 Then in any file you want a filename based namespace generated use the placeholder **__filenamespace**.
 
-## Options
+## ⚙️ Options
 
 Use Babel's plugin options by replacing the plugin string with an array of the plugin name and an object with the options:
 - [`root`](#root): *(Default: project root)*
@@ -77,7 +86,7 @@ Use Babel's plugin options by replacing the plugin string with an array of the p
 - [`customPlaceholders`](#customplaceholders): *(Default: [])*
    - Specify custom placeholders, each with their own configuration (all above options) e.g. `[{ "placeholder": "__testnamespace", "separator": "." }]`.
 
-## Examples
+## ✨Examples
 
 ### `root`:
 ```json
@@ -181,8 +190,16 @@ const namespace = 'app/container/HomePage/Home';
       {
         "separator": ".",
         "customPlaceholders": [
-          { "placeholder": "__dotDot", "separator": ".." },
-          { "placeholder": "__dotDotDot", "separator": "..." }
+          {
+            "placeholder": "__dotDot",
+            "separator": ".."
+          },
+          {
+            "placeholder": "__dotDotDot",
+            "separator": "...",
+            "root": "app",
+            "dropAllFilenames": true
+          }
         ]
       }
     ]
@@ -198,22 +215,14 @@ const dotDotDotNamespace = __dotDotDot;
 ```
 ```javascript
 // is transformed into
-const namespace = 'container.App.data.file';
-const dotDotNamespace = 'container..App..data..file';
-const dotDotDotNamespace = 'container...App...data...file';
+const namespace = 'app.container.App.data.file';
+const dotDotNamespace = 'app.container..App..data..file';
+const dotDotDotNamespace = 'container...App...data';
 ```
 
-
-## Author
-
-👤 **Samuel Sharpe**
-
-* Twitter: [@samit4me](https://twitter.com/samit4me)
-* Github: [@samit4me](https://github.com/samit4me)
-
-## Show your support
-
-Give a ⭐️ if this project helped you!
+## 🤝 Contributing
+Contributions, issues and feature requests are welcome.<br />
+Feel free to check the [Contributing](https://github.com/samit4me/babel-plugin-filenamespace/blob/master/CONTRIBUTING.md) page if you want to contribute.
 
 ## 📝 License
 
@@ -226,3 +235,9 @@ This project is [MIT](https://github.com/samit4me/babel-plugin-filenamespace/blo
 [jestDescribe]: https://jestjs.io/docs/en/api#describename-fn
 [reduxActionType]: https://redux.js.org/basics/actions#actions
 [storyNesting]: https://storybook.js.org/docs/basics/writing-stories/#nesting-stories
+[github-watch-badge]: https://img.shields.io/github/watchers/samit4me/babel-plugin-filenamespace.svg?style=social
+[github-watch]: https://github.com/samit4me/babel-plugin-filenamespace/watchers
+[github-star-badge]: https://img.shields.io/github/stars/samit4me/babel-plugin-filenamespace.svg?style=social
+[github-star]: https://github.com/samit4me/babel-plugin-filenamespace/stargazers
+[twitter]: https://twitter.com/intent/tweet?text=Check%20out%20babel-plugin-filenamespace!%20https://github.com/samit4me/babel-plugin-filenamespace%20%F0%9F%91%8D
+[twitter-badge]: https://img.shields.io/twitter/url/https/github.com/samit4me/babel-plugin-filenamespace.svg?style=social
