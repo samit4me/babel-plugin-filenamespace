@@ -1,6 +1,6 @@
 <div align="center">
 <h1>babel-plugin-filenamespace 📂</h1>
-<p>Babel plugin to generate a namespace <i>(a.k.a string)</i> based on filename.</p>
+<p>Use file structure to namespace your code</p>
 
 [![Build Status](https://travis-ci.org/samit4me/babel-plugin-filenamespace.svg?branch=master)](https://travis-ci.org/samit4me/babel-plugin-filenamespace)
 [![Build status](https://ci.appveyor.com/api/projects/status/j63t7l2wwaqu3h0i?svg=true)](https://ci.appveyor.com/project/samit4me/babel-plugin-filenamespace)
@@ -75,7 +75,7 @@ Use Babel's plugin options by replacing the plugin string with an array of the p
 - [`customPlaceholders`](#customplaceholders): *(Default: [])*
    - Specify custom placeholders, each with their own configuration (all above options) e.g. `[{ "placeholder": "__testnamespace", "separator": "." }]`.
 
-## ✨Examples
+## ✨ Examples
 
 ### `root`:
 ```json
