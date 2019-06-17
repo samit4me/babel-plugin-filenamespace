@@ -47,7 +47,7 @@ Via `.babelrc`
 }
 ```
 
-Using [ESLint][eslint]?
+Via [`.eslintrc`][eslint]
 
 ```json
 {
