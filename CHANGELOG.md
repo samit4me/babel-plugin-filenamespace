@@ -1,3 +1,6 @@
+## 2.0.4 (June 17, 2019)
+- Update README.
+
 ## 2.0.3 (June 13, 2019)
 - Update README.
 
