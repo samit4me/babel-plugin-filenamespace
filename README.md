@@ -1,6 +1,6 @@
 <div align="center">
 <h1>babel-plugin-filenamespace 📂</h1>
-Babel plugin to generate a namespace <i>(a.k.a string)</i> based on filename.
+<p>Babel plugin to generate a namespace <i>(a.k.a string)</i> based on filename.</p>
 
 [![Build Status](https://travis-ci.org/samit4me/babel-plugin-filenamespace.svg?branch=master)](https://travis-ci.org/samit4me/babel-plugin-filenamespace)
 [![Build status](https://ci.appveyor.com/api/projects/status/j63t7l2wwaqu3h0i?svg=true)](https://ci.appveyor.com/project/samit4me/babel-plugin-filenamespace)
@@ -13,7 +13,6 @@ Babel plugin to generate a namespace <i>(a.k.a string)</i> based on filename.
 [![Tweet][twitter-badge]][twitter]
 
 </div>
-<hr />
 
 [📄Description](#📄-description)<br />
 [📦Install](#📦-install)<br />
@@ -22,8 +21,6 @@ Babel plugin to generate a namespace <i>(a.k.a string)</i> based on filename.
 [✨Examples](#✨-examples)<br />
 [🤝Contributing](#🤝-contributing)<br />
 [📝License](#📝-license)<br />
-
-<hr />
 
 ## 📄 Description
 
