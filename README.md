@@ -47,7 +47,7 @@ Via `.babelrc`
 }
 ```
 
-Via [`.eslintrc`][eslint]
+Via `.eslintrc`
 
 ```json
 {
@@ -220,7 +220,6 @@ This project is [MIT](https://github.com/samit4me/babel-plugin-filenamespace/blo
 
 [__dirname]: https://nodejs.org/api/modules.html#modules_dirname
 [__filename]: https://nodejs.org/api/modules.html#modules_filename
-[eslint]: http://eslint.org/
 [jestDescribe]: https://jestjs.io/docs/en/api#describename-fn
 [reduxActionType]: https://redux.js.org/basics/actions#actions
 [storyNesting]: https://storybook.js.org/docs/basics/writing-stories/#nesting-stories
