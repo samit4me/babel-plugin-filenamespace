@@ -1,7 +1,7 @@
 {
   "name": "babel-plugin-filenamespace",
-  "version": "2.0.3",
-  "description": "Babel plugin to generate a namespace based on filename",
+  "version": "2.0.4",
+  "description": "Babel plugin to generate a namespace (a.k.a string) based on filename.",
   "main": "lib/index.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production babel src --out-dir lib --ignore 'src/**/*.spec.js','src/**/*.test.js'",

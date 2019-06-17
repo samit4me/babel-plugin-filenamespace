@@ -1,5 +1,4 @@
-# babel-plugin-filenamespace
-
+# 📂 babel-plugin-filenamespace
 Babel plugin to generate a namespace _(a.k.a string)_ based on filename.
 
 [![Build Status](https://travis-ci.org/samit4me/babel-plugin-filenamespace.svg?branch=master)](https://travis-ci.org/samit4me/babel-plugin-filenamespace)
@@ -41,22 +40,12 @@ npm install --save-dev babel-plugin-filenamespace
 ```
 
 ## Usage
-Via `.babelrc` (Recommended)
+Via `.babelrc`
 ```json
 {
   "plugins": [
     "filenamespace"
   ]
-}
-```
-or via `package.json`
-```json
-{
-  "babel": {
-    "plugins": [
-      "filenamespace"
-    ]
-  }
 }
 ```
 
@@ -75,22 +64,22 @@ Then in any file you want a filename based namespace generated use the placehold
 ## Options
 
 Use Babel's plugin options by replacing the plugin string with an array of the plugin name and an object with the options:
-- [`root`](#root-example): *(Default: project root)*
-   - specify root directory relative to project src (e.g. src).
-- [`separator`](#separator-example): *(Default: "/")*
-   - specify directory separator.
-- [`dropAllFilenames`](#dropallfilenames-example): *(Default: false)*
-   - setting to true will exclude all filenames and use directory structure only.
+- [`root`](#root): *(Default: project root)*
+   - Specify root directory relative to project src (e.g. src).
+- [`separator`](#separator): *(Default: "/")*
+   - Specify directory separator.
+- [`dropAllFilenames`](#dropallfilenames): *(Default: false)*
+   - Setting to true will exclude all filenames and use directory structure only.
    - _**Note:** files named `index` OR have a name that match the parent directory (file extention ignored) are always dropped, regardless of this setting, as they do not provide meaning_.
-- [`dropExtensions`](#dropextensions-example): *(Default: [".spec", ".test", ".story", ".stories"])*
-   - specify the extensions you want removed.
+- [`dropExtensions`](#dropextensions): *(Default: [".spec", ".test", ".story", ".stories"])*
+   - Specify the extensions you want removed.
    - _**Note:** file extension are always removed, these extensions are for removing extensions from common file naming conventions (e.g. `path/to/file.test.js` will transform to `path/to/file`)_.
-- [`customPlaceholders`](#customplaceholders-extension): *(Default: [])*
-   - specify custom placeholders, each with their own configuration (all above options) e.g. `[{ "placeholder": "__testnamespace", "separator": "." }]`.
+- [`customPlaceholders`](#customplaceholders): *(Default: [])*
+   - Specify custom placeholders, each with their own configuration (all above options) e.g. `[{ "placeholder": "__testnamespace", "separator": "." }]`.
 
 ## Examples
 
-### `root` example:
+### `root`:
 ```json
 {
   "plugins": [
@@ -113,7 +102,7 @@ const namespace = __filenamespace;
 const namespace = 'container/App/data/file';
 ```
 
-### `separator` example:
+### `separator`:
 ```json
 {
   "plugins": [
@@ -136,7 +125,7 @@ const namespace = __filenamespace;
 const namespace = 'app👌container👌App👌data👌file';
 ```
 
-### `dropAllFilenames` example:
+### `dropAllFilenames`:
 ```json
 {
   "plugins": [
@@ -159,7 +148,7 @@ const namespace = __filenamespace;
 const namespace = 'app/container/HomePage';
 ```
 
-### `dropExtensions` example:
+### `dropExtensions`:
 ```json
 {
   "plugins": [
@@ -182,7 +171,7 @@ const namespace = __filenamespace;
 const namespace = 'app/container/HomePage/Home';
 ```
 
-### `customPlaceholders` extension:
+### `customPlaceholders`:
 
 ```json
 {
@@ -214,9 +203,22 @@ const dotDotNamespace = 'container..App..data..file';
 const dotDotDotNamespace = 'container...App...data...file';
 ```
 
-## License
 
-MIT, see [LICENSE](LICENSE) for details.
+## Author
+
+👤 **Samuel Sharpe**
+
+* Twitter: [@samit4me](https://twitter.com/samit4me)
+* Github: [@samit4me](https://github.com/samit4me)
+
+## Show your support
+
+Give a ⭐️ if this project helped you!
+
+## 📝 License
+
+Copyright © 2019 [Samuel Sharpe](https://github.com/samit4me).<br />
+This project is [MIT](https://github.com/samit4me/babel-plugin-filenamespace/blob/master/LICENSE) licensed.
 
 [__dirname]: https://nodejs.org/api/modules.html#modules_dirname
 [__filename]: https://nodejs.org/api/modules.html#modules_filename
