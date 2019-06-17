@@ -16,11 +16,11 @@
 
 ## 📄 Description
 
-Directories and filenames are typically descriptive by nature, which make them great for namespacing your code.
+Directories and filenames are typically descriptive by nature so let's use them to namespace our code.
 
-> Think about [redux action types][reduxActionType], unit test [describe][jestDescribe] blocks, [storybook stories][storyNesting].
+> Think about unit test [describe][jestDescribe] blocks, Storybook [stories][storyNesting] and Redux [action types][reduxActionType] (DDD).
 
-[__dirname][__dirname] and [__filename][__filename] are perfect for this, but with code bundling and client-side JS they lose their meaning. The purpose of this plugin is to give that meaning back.
+Node provides [__dirname][__dirname] and [__filename][__filename] which are perfect for this, but with code bundling and client-side JS they lose their meaning. The purpose of this plugin is to give that meaning back.
 
 ```javascript
 // src/components/Button.test.js
