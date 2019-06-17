@@ -14,14 +14,6 @@
 
 </div>
 
-[📄Description](#📄-description)<br />
-[📦Install](#📦-install)<br />
-[🚀Usage](#🚀-usage)<br />
-[⚙️Options](#⚙️-options)<br />
-[✨Examples](#✨-examples)<br />
-[🤝Contributing](#🤝-contributing)<br />
-[📝License](#📝-license)<br />
-
 ## 📄 Description
 
 Directories and filenames are typically descriptive by nature, which make them great for namespacing your code.
