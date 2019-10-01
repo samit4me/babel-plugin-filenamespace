@@ -7,15 +7,15 @@ export const defaultDropExtensions = [
   '.stories',
 ];
 
-const normalisePathSep = path => (path
+const normalisePathSep = (path) => (path
   ? path.replace(/\\/g, '/')
   : path
 );
-const removeLeadingDotSlash = path => (path && path.match(/^\.\//)
+const removeLeadingDotSlash = (path) => (path && path.match(/^\.\//)
   ? path.replace(/^\.\//, '')
   : path
 );
-const buildPluginConfig = opts => ({
+const buildPluginConfig = (opts) => ({
   dropAllFilenames: opts && opts.dropAllFilenames,
   dropExtensions: (opts && opts.dropExtensions) || defaultDropExtensions,
   separator: opts && opts.separator,
@@ -29,7 +29,7 @@ const getConfigIfNodeTransformable = (path, state) => {
   // Node matches custom placeholder (added in v2).
   // Note: always choose 1st one if duplicates exist.
   const placeholder = (state.opts.customPlaceholders || [])
-    .filter(x => x && x.placeholder === path.node.name)[0];
+    .filter((x) => x && x.placeholder === path.node.name)[0];
   if (placeholder) {
     return buildPluginConfig(placeholder);
   }
@@ -73,8 +73,8 @@ export default ({ types: t }) => ({
             const sourcePathSegments = namespaceRoot.split('/');
             const rootPathSegments = userSetRoot.split('/');
             namespaceRoot = rootPathSegments
-              .filter(val => val.match(/^\.\.$/))
-              .reduce(acc => acc.slice(0, -1), sourcePathSegments)
+              .filter((val) => val.match(/^\.\.$/))
+              .reduce((acc) => acc.slice(0, -1), sourcePathSegments)
               .join('/');
           }
         }
