@@ -3,9 +3,9 @@ version: 1.0.{build}
 # Test against these versions of Node.js
 environment:
   matrix:
-    - nodejs_version: "6"
     - nodejs_version: "8"
     - nodejs_version: "10"
+    - nodejs_version: "12"
 
 # Fix line endings in Windows. (runs before repo cloning)
 init:
