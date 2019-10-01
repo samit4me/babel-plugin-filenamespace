@@ -56,7 +56,7 @@
     "@babel/core": "^7.6.2",
     "@babel/preset-env": "^7.6.2",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^24.8.0",
+    "babel-jest": "^24.9.0",
     "coveralls": "^3.0.4",
     "cross-env": "^5.2.0",
     "eslint": "^5.16.0",
@@ -64,7 +64,7 @@
     "eslint-plugin-import": "^2.17.3",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.13.0",
-    "jest-cli": "^24.8.0",
+    "jest-cli": "^24.9.0",
     "rimraf": "^2.6.3"
   }
 }
