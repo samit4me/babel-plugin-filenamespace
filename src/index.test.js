@@ -21,7 +21,7 @@ const getTestFilePath = (pathSegments, filename) => {
 };
 const getFixturePath = (pathSegments, filename = 'fixture.js') => getTestFilePath(pathSegments, filename);
 const getExpectedPath = (pathSegments, filename = 'expected.js') => getTestFilePath(pathSegments, filename);
-const getExpectedOutput = pathSegments => fs.readFileSync(getExpectedPath(pathSegments), { encoding: 'utf8' });
+const getExpectedOutput = (pathSegments) => fs.readFileSync(getExpectedPath(pathSegments), { encoding: 'utf8' });
 
 // No transform test
 it('should leave file as is if no __filenamespace is present', () => {
@@ -50,11 +50,12 @@ it('should omit filename of "index" regardless of cASe', () => {
 // Separate path segments using a dot
 it('should separate path segments with a dot "."', () => {
   const fixture = ['separator', 'dot'];
-  const options = Object.assign({}, babelOptions, {
+  const options = {
+    ...babelOptions,
     plugins: [
       [pluginPath, { separator: '.' }],
     ],
-  });
+  };
   const actual = transformFileSync(getFixturePath(fixture), options).code;
   const expected = fs.readFileSync(getExpectedPath(fixture), { encoding: 'utf8' });
   expect(actual).toBe(expected);
@@ -63,11 +64,12 @@ it('should separate path segments with a dot "."', () => {
 // Separate path segments using an emoji 👌 (aka upside down circle punch game)
 it('should separate path segments with an emoji 👌', () => {
   const fixture = ['separator', 'emoji'];
-  const options = Object.assign({}, babelOptions, {
+  const options = {
+    ...babelOptions,
     plugins: [
       [pluginPath, { separator: '👌' }],
     ],
-  });
+  };
   const actual = transformFileSync(getFixturePath(fixture), options).code;
   const expected = fs.readFileSync(getExpectedPath(fixture), { encoding: 'utf8' });
   expect(actual).toBe(expected);
@@ -76,11 +78,12 @@ it('should separate path segments with an emoji 👌', () => {
 // Specifying a root directory as one of the folders living in the project root
 it('should start the namespace one folder deeper than project src', () => {
   const fixture = ['root', 'singleFolder'];
-  const options = Object.assign({}, babelOptions, {
+  const options = {
+    ...babelOptions,
     plugins: [
       [pluginPath, { root: 'testFixtures' }],
     ],
-  });
+  };
   const actual = transformFileSync(getFixturePath(fixture), options).code;
   const expected = fs.readFileSync(getExpectedPath(fixture), { encoding: 'utf8' });
   expect(actual).toBe(expected);
@@ -89,11 +92,12 @@ it('should start the namespace one folder deeper than project src', () => {
 // Specifying a root directory as a path (ONLY forward slashes are excepted)
 it('should start the namespace from the root path specified', () => {
   const fixture = ['root', 'path'];
-  const options = Object.assign({}, babelOptions, {
+  const options = {
+    ...babelOptions,
     plugins: [
       [pluginPath, { root: 'testFixtures/root/path' }],
     ],
-  });
+  };
   const actual = transformFileSync(getFixturePath(fixture), options).code;
   const expected = fs.readFileSync(getExpectedPath(fixture), { encoding: 'utf8' });
   expect(actual).toBe(expected);
@@ -102,11 +106,12 @@ it('should start the namespace from the root path specified', () => {
 // Specifying a root directory using ../
 it('should start the namespace with the project folder', () => {
   const fixture = ['root', 'projectFolder'];
-  const options = Object.assign({}, babelOptions, {
+  const options = {
+    ...babelOptions,
     plugins: [
       [pluginPath, { root: '../' }],
     ],
-  });
+  };
   const actual = transformFileSync(getFixturePath(fixture), options).code;
   const expected = fs.readFileSync(getExpectedPath(fixture), { encoding: 'utf8' });
   expect(actual).toBe(expected);
@@ -115,11 +120,12 @@ it('should start the namespace with the project folder', () => {
 // Specifying a root directory using ../../
 it('should start the namespace with the projects parent folder', () => {
   const fixture = ['root', 'projectFolder'];
-  const options = Object.assign({}, babelOptions, {
+  const options = {
+    ...babelOptions,
     plugins: [
       [pluginPath, { root: '../../' }],
     ],
-  });
+  };
   // cannot possibly know the parent folder of the project outside of
   // my own computer, so just checking if it ends correctly
   const actual = transformFileSync(getFixturePath(fixture), options).code
@@ -130,11 +136,12 @@ it('should start the namespace with the projects parent folder', () => {
 // Specifying a root directory using ./basic
 it('should start the namespace as per basic test and ignore leading ./', () => {
   const fixture = 'basic';
-  const options = Object.assign({}, babelOptions, {
+  const options = {
+    ...babelOptions,
     plugins: [
       [pluginPath, { root: './basic' }],
     ],
-  });
+  };
   const actual = transformFileSync(getFixturePath(fixture), options).code;
   const expected = fs.readFileSync(getExpectedPath(fixture), { encoding: 'utf8' });
   expect(actual).toBe(expected);
@@ -143,11 +150,12 @@ it('should start the namespace as per basic test and ignore leading ./', () => {
 // Plugin option `dropAllFilenames` tests
 it('should omit all filenames when dropAllFilenames: true', () => {
   const fixture = 'dropAllFilenames';
-  const options = Object.assign({}, babelOptions, {
+  const options = {
+    ...babelOptions,
     plugins: [
       [pluginPath, { dropAllFilenames: true }],
     ],
-  });
+  };
   const actual = transformFileSync(getFixturePath(fixture), options).code;
   const expected = fs.readFileSync(getExpectedPath(fixture), { encoding: 'utf8' });
   expect(actual).toBe(expected);
@@ -173,11 +181,12 @@ defaultDropExtensions.forEach((ext) => {
 defaultDropExtensions.forEach((ext) => {
   it(`should omit ${ext} extensions when dropExtensions is specified`, () => {
     const fixture = ['dropExtensions', ext.substr(1)];
-    const options = Object.assign({}, babelOptions, {
+    const options = {
+      ...babelOptions,
       plugins: [
         [pluginPath, { dropExtensions: [ext] }],
       ],
-    });
+    };
     const actual = transformFileSync(getFixturePath(fixture, `fixture${ext}.js`), options).code;
     const expected = fs.readFileSync(getExpectedPath(fixture), { encoding: 'utf8' });
     expect(actual).toBe(expected);
@@ -187,7 +196,8 @@ defaultDropExtensions.forEach((ext) => {
 // Custom placeholders
 it('should suppport custom placeholders', () => {
   const fixture = ['customPlaceholders'];
-  const options = Object.assign({}, babelOptions, {
+  const options = {
+    ...babelOptions,
     plugins: [
       [
         pluginPath,
@@ -198,7 +208,7 @@ it('should suppport custom placeholders', () => {
         },
       ],
     ],
-  });
+  };
   const actual = transformFileSync(getFixturePath(fixture), options).code;
   const expected = fs.readFileSync(getExpectedPath(fixture), { encoding: 'utf8' });
   expect(actual).toBe(expected);
@@ -207,7 +217,8 @@ it('should suppport custom placeholders', () => {
 // Default and custom placeholders together
 it('should suppport default and custom placeholders together', () => {
   const fixture = ['defaultAndCustomPlaceholders'];
-  const options = Object.assign({}, babelOptions, {
+  const options = {
+    ...babelOptions,
     plugins: [
       [
         pluginPath,
@@ -218,7 +229,7 @@ it('should suppport default and custom placeholders together', () => {
         },
       ],
     ],
-  });
+  };
   const actual = transformFileSync(getFixturePath(fixture), options).code;
   const expected = fs.readFileSync(getExpectedPath(fixture), { encoding: 'utf8' });
   expect(actual).toBe(expected);
@@ -227,7 +238,8 @@ it('should suppport default and custom placeholders together', () => {
 // All possible options
 it('should suppport default and custom placeholders together using all possible options', () => {
   const fixture = ['allOptions'];
-  const options = Object.assign({}, babelOptions, {
+  const options = {
+    ...babelOptions,
     plugins: [
       [
         pluginPath,
@@ -253,7 +265,7 @@ it('should suppport default and custom placeholders together using all possible 
         },
       ],
     ],
-  });
+  };
   const actual = transformFileSync(getFixturePath(fixture), options).code;
   const expected = fs.readFileSync(getExpectedPath(fixture), { encoding: 'utf8' });
   expect(actual).toBe(expected);
