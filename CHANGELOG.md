@@ -1,3 +1,8 @@
+## 3.0.0 (October 1, 2019)
+* Drop support for node 6.
+* Add support for node 12.
+* Update dependencies.
+
 ## 2.0.4 (June 17, 2019)
 - Update README.
 
