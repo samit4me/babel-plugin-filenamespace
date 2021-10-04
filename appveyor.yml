@@ -3,9 +3,9 @@ version: 1.0.{build}
 # Test against these versions of Node.js
 environment:
   matrix:
-    - nodejs_version: "8"
     - nodejs_version: "10"
     - nodejs_version: "12"
+    - nodejs_version: "14"
 
 # Fix line endings in Windows. (runs before repo cloning)
 init:
@@ -13,7 +13,9 @@ init:
   
 # Install scripts--runs after repo cloning
 install:
-  - npm -g install npm
+  # Get the latest stable version of Node.js or io.js
+  - ps: Install-Product node $env:nodejs_version
+  # install modules
   - npm install
 
 # Disable automatic builds
