@@ -1,3 +1,11 @@
+## 4.0.1 (October 7, 2021)
+* Update README
+* Update mistake in CHANGELOG
+
+## 4.0.0 (October 7, 2021)
+* Drop support for node 8
+* Update dependencies
+
 ## 3.0.0 (October 1, 2019)
 * Drop support for node 6.
 * Add support for node 12.
