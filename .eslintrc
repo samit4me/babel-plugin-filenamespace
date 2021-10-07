@@ -1,5 +1,5 @@
 {
-    "extends": "airbnb",
+    "extends": "airbnb/base",
     "env": {
       "browser": true,
       "node": true,
@@ -10,8 +10,6 @@
       "__filenamespace": false
     },
     "plugins": [
-        "react",
-        "jsx-a11y",
         "import"
     ]
 }
